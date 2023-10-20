@@ -1,7 +1,7 @@
 import pandas as pd
 import yfinance as yf
 import backtesting
-import pandas_ta as ta
+# import pandas_ta as ta
 from datetime import datetime
 
 from backtesting import Strategy
@@ -18,16 +18,8 @@ stock = yf.download("BTC-USD", start="2023-10-10", interval="5m", prepost=False)
 stock = stock.reset_index()
 
 pd.set_option('display.max_rows', stock.shape[0]+1)
-pmHigh = stock.head(67)[["High"]].max().High
-pmLow = stock.head(67)[["Low"]].min().Low
-# print(pmHigh)
-# print(pmLow)
-# print(stock.head(67)[["High"]].idxmax())
-# print(stock.head(67)[["Low"]].idxmin())
-
 
 # def isBreakOut(candle):
-
 #     if (candle > pmHigh):
 #         return 1
     
@@ -36,7 +28,6 @@ pmLow = stock.head(67)[["Low"]].min().Low
     
 #     else:
 #         return 0
-    
     
 # stock["isBreakOut"] = [isBreakOut(candle) for candle in stock.Close]
     
@@ -167,6 +158,3 @@ fig.show()
 
 # strategy = stats["_strategy"]
 # print(strategy.lower_bound)
-
-
-#Little change

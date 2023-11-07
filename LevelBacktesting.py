@@ -9,18 +9,19 @@ from backtesting import Backtest
 from backtesting.lib import crossover
 
 import plotly.graph_objects as go
-from datetime import datetime
+import plotly.io as pio
+pio.renderers.default = 'browser'
+# print(pio.renderers)
 
-ticker = "T"
-backlash = 0.05
-stock = yf.download(ticker, start="2023-07-01", interval="1H", prepost=False)[
+ticker = "META"
+backlash = 0.30
+stock = yf.download(ticker, start="2023-10-22", interval="1H", prepost=False)[
     ["Open", "High", "Low", "Close", "Volume"]  
 ]
 
 # stock = stock.reset_index()
 
 pd.set_option('display.max_rows', stock.shape[0]+1)
-
 
 
 def support(df1, l, n1, n2): #n1 n2 before and after candle l
@@ -119,32 +120,32 @@ while (1):
     c+=1    
     
 # Add dropdown
-fig.update_layout(
-    updatemenus=[
-        dict(
-            buttons=list([
-                dict(
-                    args=["type", "candlestick"],
-                    label="candlestick",
-                    method="restyle"
-                ),
-                dict(
-                    args=["type", "scatter"],
-                    label="scatter",
-                    method="restyle"
-                )
-            ]),
-            direction="down",
-            pad={"r": 10, "t": 10},
-            showactive=True,
-            x=0.1,
-            xanchor="left",
-            y=1.1,
-            yanchor="top"
-        ),
-    ]
-)
-
+# fig.update_layout(
+#     updatemenus=[
+#         dict(
+#             buttons=list([
+#                 dict(
+#                     args=["type", "candlestick"],
+#                     label="candlestick",
+#                     method="restyle"
+#                 ),
+#                 dict(
+#                     args=["type", "scatter"],
+#                     label="scatter",
+#                     method="restyle"
+#                 )
+#             ]),
+#             direction="down",
+#             pad={"r": 10, "t": 10},
+#             showactive=True,
+#             x=0.1,
+#             xanchor="left",
+#             y=1.1,
+#             yanchor="top"
+#         ),
+#     ]
+# )
+fig.write_html('test.html', auto_open=True)
 fig.show()
 
 def isBreakOut(candle):
@@ -157,7 +158,7 @@ def isBreakOut(candle):
     else:
         return 0
     
-stock["isBreakOut"] = [isBreakOut(candle) for candle in stock.Close]
+# stock["isBreakOut"] = [isBreakOut(candle) for candle in stock.Close]
     
 def SIGNAL():
     return stock.isBreakOut
